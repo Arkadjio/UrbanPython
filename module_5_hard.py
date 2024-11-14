@@ -24,7 +24,7 @@ class UrTube:
         self.current_user = None
 
     def log_in(self, username, password):
-        hash_password = hashlib.sha256(password.encode()).hexdigest()
+        hash_password = int(hashlib.sha256(password.encode()).hexdigest(),16)
         for user in self.users:
             if user.nickname == username and user.password == hash_password:
                 self.current_user = user
