@@ -15,7 +15,7 @@ def string_info(string):
 
 
 # ФУнкция для проверки нахождения строки в списке
-def if_contains(string, list_to_search):
+def is_contains(string, list_to_search):
     if string in list_to_search:  # оператор для проверки
         contains = True
     else:
@@ -41,10 +41,10 @@ test_list_2 = ['Chelyaba', 'RedHill','TUrbO']
 # вызов функций для проверки
 print(string_info(test_str))
 print(string_info(test_str_2))
-print(if_contains('Arkady', test_list))
-print(if_contains('Moscow', test_list))
-print(if_contains('chelyaba', test_list_2))
-print(if_contains('DVs', test_list))
+print(is_contains('Arkady', test_list))
+print(is_contains('Moscow', test_list))
+print(is_contains('chelyaba', test_list_2))
+print(is_contains('DVs', test_list))
 
 # фин результат
 print(f'Функция была вызвана {calls} раз')
