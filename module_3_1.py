@@ -16,7 +16,8 @@ def string_info(string):
 
 # ФУнкция для проверки нахождения строки в списке
 def is_contains(string, list_to_search):
-    if string in list_to_search:  # оператор для проверки
+    list_to_search = [element.lower() for element in list_to_search]
+    if string.lower() in list_to_search:  # оператор для проверки
         contains = True
     else:
         contains = False
@@ -27,24 +28,9 @@ def is_contains(string, list_to_search):
 
 calls = 0  # Переменная подсчета вызовов функций
 
-
-
-# тестовые значение для проверки
-test_str = 'Arkady'
-test_str_2 = 'MAximka'
-
-# тестовые значение для проверки списка
-test_list = ['Vovchik', 'Arkady', 'sveta']
-test_list_2 = ['Chelyaba', 'RedHill','TUrbO']
-
-
-# вызов функций для проверки
-print(string_info(test_str))
-print(string_info(test_str_2))
-print(is_contains('Arkady', test_list))
-print(is_contains('Moscow', test_list))
-print(is_contains('chelyaba', test_list_2))
-print(is_contains('DVs', test_list))
-
+print(string_info('Capybara'))
+print(string_info('Armageddon'))
+print(is_contains('Urban', ['ban', 'BaNaN', 'urBAN']))  # Urban ~ urBAN
+print(is_contains('cycle', ['recycling', 'cyclic']))  # No matches
 # фин результат
 print(f'Функция была вызвана {calls} раз')
