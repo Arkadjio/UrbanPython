@@ -1,18 +1,15 @@
 # создаем функцию
 def get_multiplied_digits(number):
-    # переменная со строковым значением аргумента
-    str_number = str(number)
+    str_number = str(number)  # даес строковое представление
+    first = int(str_number[0])  # первое число
 
-    # возврат первого символа с типом цулое число
-    first = int(str_number[0])
-
-    # услов.оператор на проверку работоспособности
-    if len(str_number) > 1:
+    if len(str_number) > 1: # создаем условие для рекурсии
         return first * get_multiplied_digits(int(str_number[1:]))
-    else:
+    elif len(str_number) <= 1: # страховка на тот случай если последнее число - 0
+        first = 1
         return first
 
 
 # проверка результата
-result = get_multiplied_digits(40203)
+result = get_multiplied_digits(1230200)
 print(result)
