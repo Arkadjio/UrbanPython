@@ -1,47 +1,35 @@
-import string
+def personal_sum(numbers):
+    result = 0
+    incorrect_data = 0
+
+    for number in numbers:
+        try:
+            result += number
+        except TypeError:
+            incorrect_data += 1
+            print(f'Некорректный тип данных для подсчёта суммы - {number}')
+
+    return result, incorrect_data
 
 
-class WordsFinder:
+def calculate_average(numbers):
+    average = 0
+    try:
+        if isinstance(numbers, (list, tuple, set)):
+            sum_of_numbers, incorrect_data = personal_sum(numbers)
+            average = sum_of_numbers / (len(numbers) - incorrect_data)
 
-    def __init__(self, *file_names):  # инит с неограничнным приемом значений
-        self.file_names = file_names
+    except ZeroDivisionError:
+        return 0
+    except TypeError:
+        print('В numbers записан некорректный тип данных')
+        return None
 
-    # подготовительный метод возврата словаря
-    def get_all_words(self):
-        all_words = {}
-        for file_name in self.file_names:
-            with (open(file_name, 'r', encoding='utf-8') as f):
-                words = f.read().lower()  # перевод в нижний регистр
-                str_pnk = str.maketrans(',', ',', string.punctuation + '-')  # избавление от знаков пуктуации
-                words = words.translate(str_pnk)  # перевод мэйктранс
-                words = words.split()  # разделение слов
-                all_words[file_name] = words
-                return all_words
-
-    # метод поиска слов
-    def find(self, word):
-        all_words = self.get_all_words()  # назначение метода get_words
-        result = {}  # словарь для возврата
-        word = word.lower()  # перевод в нижний регистр
-        for file_name, words in all_words.items():
-            if word in words:
-                result[file_name] = words.index(word)
-            return word, result
-
-    # метод кол-ва слов
-    def count(self, word):
-        all_words = self.get_all_words()
-        result = {}
-        word = word.lower()
-        for file_name, words in all_words.items():
-            if word in words:
-                result[file_name] = words.count(word)
-            return result
+    return average
 
 
-# прроверка методов
 if __name__ == '__main__':
-    finder2 = WordsFinder('test_file.txt')
-    print(finder2.get_all_words())  # Все слова
-    print(finder2.find('TEXT'))
-    print(finder2.count('teXT'))
+    print(f'Результат 1: {calculate_average("1, 2, 3")}')  # Строка перебирается, но каждый символ - строковый тип
+    print(f'Результат 2: {calculate_average([1, "Строка", 3, "Ещё Строка"])}')  # Учитываются только 1 и 3
+    print(f'Результат 3: {calculate_average(567)}')  # Передана не коллекция
+    print(f'Результат 4: {calculate_average([42, 15, 36, 13])}')  # Всё должно работать
