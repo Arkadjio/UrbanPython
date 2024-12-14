@@ -1,35 +1,54 @@
-def personal_sum(numbers):
-    result = 0
-    incorrect_data = 0
-
-    for number in numbers:
-        try:
-            result += number
-        except TypeError:
-            incorrect_data += 1
-            print(f'Некорректный тип данных для подсчёта суммы - {number}')
-
-    return result, incorrect_data
+# ---- класс исключения -----
+class StepValueError(ValueError):
+    pass
 
 
-def calculate_average(numbers):
-    average = 0
-    try:
-        if isinstance(numbers, (list, tuple, set)):
-            sum_of_numbers, incorrect_data = personal_sum(numbers)
-            average = sum_of_numbers / (len(numbers) - incorrect_data)
+# ---- Класс итератор ----
+class Iterator:
+    def __init__(self, start, stop, step=1):
+        if step == 0:  # ---- Создание исключения шага ------
+            raise StepValueError("шаг не может быть равен - 0")
+        self.start = start
+        self.stop = stop
+        self.pointer = self.start
+        self.step = 1 if step > 0 else -1
 
-    except ZeroDivisionError:
-        return 0
-    except TypeError:
-        print('В numbers записан некорректный тип данных')
-        return None
+    def __iter__(self):
+        self.pointer = self.start  # ---- Указатель итерации в оснвоном равен точке отправления ----
+        return self
 
-    return average
+    def __next__(self):
+        if self.pointer * self.step >= self.stop * self.step:
+            raise StopIteration  # ---- остановка итерации ----
+        point = self.pointer  # ---- определение и возврат значения -----
+        self.pointer += self.step
+        return point
 
 
-if __name__ == '__main__':
-    print(f'Результат 1: {calculate_average("1, 2, 3")}')  # Строка перебирается, но каждый символ - строковый тип
-    print(f'Результат 2: {calculate_average([1, "Строка", 3, "Ещё Строка"])}')  # Учитываются только 1 и 3
-    print(f'Результат 3: {calculate_average(567)}')  # Передана не коллекция
-    print(f'Результат 4: {calculate_average([42, 15, 36, 13])}')  # Всё должно работать
+try:
+    iter1 = Iterator(100, 200, 0)
+    for i in iter1:
+        print(i, end=' ')
+except StepValueError:
+    print('Шаг указан неверно')
+
+iter2 = Iterator(-5, 1)
+iter3 = Iterator(6, 15, 2)
+iter4 = Iterator(5, 1, -1)
+iter5 = Iterator(10, 1)
+
+for i in iter2:
+    print(i, end=' ')
+print()
+
+for i in iter3:
+    print(i, end=' ')
+print()
+
+for i in iter4:
+    print(i, end=' ')
+print()
+
+for i in iter5:
+    print(i, end=' ')
+print()
