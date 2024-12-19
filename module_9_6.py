@@ -1,14 +1,11 @@
-from itertools import combinations  # --- импорт комбинаций ---
-
-
+# ----- создаем функцию - генератор -----
 def all_variants(text):
-    len_txt = len(text)
-    for x in range(1, len_txt + 1):  # --- начало с одного так,как ниже вставка джоин ---
-        for z in combinations(text, x):
-            yield ''.join(z)  # --- обьединяем строки ---
+    for letter in range(len(text)):  # ----- первый перебор -----
+        for var in range(len(text) - letter):  # ----- второй перебор -----
+            yield text[var:var + letter + 1]  # ----- возврат ------
 
 
-# --- проверка ---
-a = all_variants("abc")
+# ----- проверка -----
+a = all_variants('abc')
 for i in a:
     print(i)
