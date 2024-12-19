@@ -1,54 +1,19 @@
-# ---- класс исключения -----
-class StepValueError(ValueError):
-    pass
+def is_prime(func):
+    def wrapper():
+        prime = 0
+        for i in range(2, func - 1):
+            if func % i == 0:
+                prime += 1
+            if prime <= 0:
+                return f'число {func} - простое!'
+            else:
+                return f'число {func} - составное!'
+    return wrapper
 
 
-# ---- Класс итератор ----
-class Iterator:
-    def __init__(self, start, stop, step=1):
-        if step == 0:  # ---- Создание исключения шага ------
-            raise StepValueError("шаг не может быть равен - 0")
-        self.start = start
-        self.stop = stop
-        self.pointer = self.start
-        self.step = 1 if step > 0 else -1
-
-    def __iter__(self):
-        self.pointer = self.start  # ---- Указатель итерации в оснвоном равен точке отправления ----
-        return self
-
-    def __next__(self):
-        if self.pointer * self.step >= self.stop * self.step:
-            raise StopIteration  # ---- остановка итерации ----
-        point = self.pointer  # ---- определение и возврат значения -----
-        self.pointer += self.step
-        return point
+@is_prime
+def sum_three(a, b, c):
+    return a + b + c
 
 
-try:
-    iter1 = Iterator(100, 200, 0)
-    for i in iter1:
-        print(i, end=' ')
-except StepValueError:
-    print('Шаг указан неверно')
-
-iter2 = Iterator(-5, 1)
-iter3 = Iterator(6, 15, 2)
-iter4 = Iterator(5, 1, -1)
-iter5 = Iterator(10, 1)
-
-for i in iter2:
-    print(i, end=' ')
-print()
-
-for i in iter3:
-    print(i, end=' ')
-print()
-
-for i in iter4:
-    print(i, end=' ')
-print()
-
-for i in iter5:
-    print(i, end=' ')
-print()
+print(sum_three(2, 3, 4))
